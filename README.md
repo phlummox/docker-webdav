@@ -1,19 +1,25 @@
 ## Supported tags
 
-* [`2.4`, `latest` (*2.4/Dockerfile*)](https://github.com/BytemarkHosting/docker-webdav/blob/master/2.4/Dockerfile)
+* [`2.4`, `latest` (*2.4/Dockerfile*)](https://github.com/phlummox/docker-webdav/blob/master/2.4/Dockerfile)
 
-## Quick reference
+## Summary
 
 This image runs an easily configurable WebDAV server with Apache.
+The same as [bytemark/webdav](https://hub.docker.com/r/bytemark/webdav/), but
+fixed so HTTPS actually works. Many thanks to 
+[Davide Bragagnolo](https://github.com/davebra) for
+[fixing](https://github.com/davebra/docker-webdav/commit/f2a17a861ed6aa93bfde63920823705f07bf2510) it.
+
+## Quick reference
 
 You can configure the authentication type, the authentication of multiple users, or to run with a self-signed SSL certificate. If you want a Let's Encrypt certificate, see an example of how to do that [here](https://github.com/BytemarkHosting/configs-webdav-docker).
 
 * **Code repository:**
-  https://github.com/BytemarkHosting/docker-webdav
+  https://github.com/phlummox/docker-webdav
 * **Where to file issues:**
-  https://github.com/BytemarkHosting/docker-webdav/issues
+  https://github.com/BytemarkHosting/docker-webdav/issues, for all the good it will do
 * **Maintained by:**
-  [Bytemark Hosting](https://www.bytemark.co.uk)
+  No-one, apparently 
 * **Supported architectures:**
   [Any architecture that the `httpd` image supports](https://hub.docker.com/_/httpd/)
 
@@ -30,7 +36,7 @@ To make sure your data doesn't get deleted, you'll probably want to create a per
 ```
 docker run --restart always -v /srv/dav:/var/lib/dav \
     -e AUTH_TYPE=Digest -e USERNAME=alice -e PASSWORD=secret1234 \
-    --publish 80:80 -d bytemark/webdav
+    --publish 80:80 -d phlummox/webdav
 
 ```
 
@@ -40,7 +46,7 @@ docker run --restart always -v /srv/dav:/var/lib/dav \
 version: '3'
 services:
   webdav:
-    image: bytemark/webdav
+    image: phlummox/webdav
     restart: always
     ports:
       - "80:80"
@@ -61,7 +67,7 @@ If you're happy with a self-signed SSL certificate, specify `-e SSL_CERT=selfsig
 ```
 docker run --restart always -v /srv/dav:/var/lib/dav \
     -e AUTH_TYPE=Basic -e USERNAME=test -e PASSWORD=test \
-    -e SSL_CERT=selfsigned --publish 443:443 -d bytemark/webdav
+    -e SSL_CERT=selfsigned --publish 443:443 -d phlummox/webdav
 
 ```
 
